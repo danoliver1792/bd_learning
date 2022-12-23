@@ -1,0 +1,126 @@
+-- Vamos criar uma tabela que armazena as vendas por trimestre --
+SHOW DATABASES;
+
+USE comercio;
+
+SHOW TABLES;
+
+CREATE TABLE vendedores(
+	idVendedor INT PRIMARY KEY AUTO_INCREMENT,
+	Nome VARCHAR(30),
+	Sexo CHAR(1),
+	Janeiro FLOAT(10, 2),
+	Fevereiro FLOAT(10, 2),
+	Marco FLOAT(10, 2)
+);
+
+SHOW TABLES;
+
+-- Inserindo dados --
+DESC vendedores;
+
+INSERT INTO vendedores VALUES (NULL, 'CARLOS', 'M', 30320.20, 23560.58, 2658.66);
+INSERT INTO vendedores VALUES (NULL, 'MARIA', 'F', 23556.50, 56623.00, 56923.28);
+INSERT INTO vendedores VALUES (NULL, 'ANTONIO', 'M', 23652.59, 40256.26, 56923.58);
+INSERT INTO vendedores VALUES (NULL, 'CLARA', 'F', 56296.89, 33569.40, 46320.56);
+INSERT INTO vendedores VALUES (NULL, 'ANDERSON', 'M', 46529.06, 35629.50, 22365.50);
+INSERT INTO vendedores VALUES (NULL, 'IVONE', 'F', 22653.50, 23659.96, 21569.23);
+INSERT INTO vendedores VALUES (NULL, 'JOAO', 'M', 66958.23, 78952.65, 89523.65);
+INSERT INTO vendedores VALUES (NULL, 'CELIA', 'F', 23659.89, 35609.89, 36594.89);
+
+SELECT * FROM vendedores;
+
+-- Função MAX - traz o valor máximo de uma coluna --
+SELECT MAX(Fevereiro) AS MaiorFevereiro
+FROM vendedores;
+
+-- Função MIN - traz o menor valor de uma coluna --
+SELECT MIN(Fevereiro) AS MenorFevereiro	
+FROM vendedores;
+
+-- Função AVG - traz a média dos valores de uma coluna --
+SELECT AVG(Fevereiro) AS mediaFevereiro
+FROM vendedores;
+
+SELECT MAX(Janeiro) AS MaiorJaneiro,
+	MIN(Janeiro) AS MinimoJaneiro,
+	AVG(Janeiro) AS MediaJaneiro
+FROM vendedores;
+
+-- Vamos arredondar as casas decimais com TRUNCATE--
+SELECT TRUNCATE(AVG(Janeiro), 2) AS MediaJaneiro
+FROM vendedores;
+
+-- Agregando com SUM --
+SELECT SUM(Janeiro) AS TotalJaneiro
+FROM vendedores;
+
+SELECT SUM(Janeiro) AS TotalJaneiro,
+	SUM(Fevereiro) AS TotalFevereiro,
+	SUM(Marco) AS TotalMarco
+FROM vendedores;
+
+-- Vendas por sexo --
+SELECT Sexo, SUM(Marco) AS TotalMarco
+FROM vendedores
+GROUP BY Sexo;
+
+/* SUBQUERIES - INNER QUERY que é resolvida primeiro */
+-- Qual o vendedor que vendeu menos em marco e qual seu nome? --
+SELECT Nome, Marco
+FROM vendedores
+WHERE Marco = (SELECT MIN(Marco) AS MinimoMarco FROM vendedores);
+
+-- E qual vendeu mais? --
+SELECT Nome, Marco
+FROM vendedores
+WHERE Marco = (SELECT MAX(Marco) AS MaiorMarco FROM vendedores);
+
+-- Quem vendeu mais que o valor médio no mês de fevereiro --
+SELECT TRUNCATE(AVG(Fevereiro), 2) FROM vendedores;
+
+SELECT Nome, Fevereiro
+FROM vendedores
+WHERE Fevereiro > (SELECT TRUNCATE(AVG(Fevereiro), 2) FROM vendedores);
+
+-- E no mês de Janeiro? --
+SELECT TRUNCATE(AVG(Janeiro), 2) AS Media_Janeiro
+FROM vendedores;
+
+SELECT Nome, Janeiro
+FROM vendedores
+WHERE Janeiro > (SELECT TRUNCATE(AVG(Janeiro), 2) FROM vendedores);
+
+-- Quem vendeu abaixo da média no mês de março? --
+SELECT TRUNCATE(AVG(Marco), 2) AS Media_Marco
+FROM vendedores;
+
+SELECT Nome, Marco
+FROM vendedores
+WHERE Marco < (SELECT TRUNCATE(AVG(Janeiro), 2) FROM vendedores);
+
+/* Operações com linhas */
+-- Qual foi o total de cada vendedor? --
+SELECT Nome,
+	Janeiro,
+	Fevereiro,
+	Marco,
+	(Janeiro + Fevereiro + Marco) AS "Total"
+	FROM vendedores;
+
+-- Qual foi a média de cada vendedor no trimestre? --
+SELECT Nome,
+	Janeiro,
+	Fevereiro,
+	Marco,
+	TRUNCATE((Janeiro + Fevereiro + Marco / 3), 2) AS "Media"
+	FROM vendedores;
+
+-- Aplicando um percentual de 25%--
+SELECT Nome,
+	Janeiro,
+	Fevereiro,
+	Marco,
+	(Janeiro  + Fevereiro + Marco) AS "Total",
+	(Janeiro + Fevereiro + Marco) * 0.25 AS "Desconto"
+	FROM vendedores;

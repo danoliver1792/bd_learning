@@ -1,0 +1,21 @@
+/* Operadores lógicos e Tabela Verdade */
+
+SHOW DATABASES;
+
+USE PROJETO;
+
+SELECT NOME, SEXO, ENDERECO FROM CLIENTE WHERE SEXO = 'M' OR ENDERECO LIKE '%RJ';
+
+SELECT NOME, SEXO, ENDERECO FROM CLIENTE WHERE SEXO = 'M' AND ENDERECO LIKE '%RJ';
+
+/* Contando os registros de uma tabela */
+SELECT COUNT(*) FROM CLIENTE;
+SELECT COUNT(*) AS 'Registros' FROM CLIENTE;
+
+SELECT SEXO, COUNT(*) FROM CLIENTE;
+
+/* Agrupando por uma coluna que não é uma função */
+SELECT SEXO, COUNT(*) 
+FROM CLIENTE 
+GROUP BY SEXO;
+

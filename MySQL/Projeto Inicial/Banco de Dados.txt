@@ -1,0 +1,68 @@
+Para que serve um Banco de Dados?
+Serve para armazenar informações de um sistema
+
+Padrão MVC
+- View: onde acontece as requisições (tem o HTML, CSS, JavaScript, JQuery, ...)
+- controller: aqui processamos as regras de negócio, qualquer processamento do sistema se encontra aqui (Usamos PHP, Java, C#, Ruby, ...);
+- Model: Classes simples que representa objetos por tabelas
+
+Como surge um Banco de Dados?
+Para criar um Banco de Dados, precisamos de requisitos (as necessidades que um software precisa)
+
+Char e Varchar
+Varchar é variante conforme o dado, ou seja, dinâmica. Já o Char não tem variação, quando o número de caracteres é fixo (não vai variar) podemos usar o Char
+
+Enum e Numericos
+Enum (conjunto de dados enumerado, conjunto fixo de dados) é utilizado quando queremos limitar os dados em uma coluna.
+Como numerico temos float [float(total, virgula)] para numeros reais e int para numeros inteiros
+
+Obs.: um registro inteiro é chamado de tupla
+
+As três formas normais
+
+- primeira forma normal
+Regra 1: Todo campo vetorizado se tornará outra tabela -> no caso de ter dois valores em uma único campo (célula)
+
+Regra 2: Todo campo multivalorado se tornará outra tabela quando o campo for divisível -> no caso da tabela cliente, temos
+endereco que pode ser divisível
+
+Regra 3: Toda tabela necessita de pelo menos um campo que identifique todo o registro como sendo único
+isso é o que chamamos de PRIMARY KEY (chave primária)
+
+- segunda forma normal
+Uma tabela está em 2FN se estiver em 1FN e todo atributo não-chave for determinado por todos os campos da chave
+primária. Em outras palavras, é necessário eliminar as dependências funcionais parciais.
+
+- terceira forma normal
+Os valores em um registro que não fazem parte da chave desse registro não pertecem à tabela. Em geral, sempre que o conteúdo de um grupo
+de campos pode se aplicar a mais de um único registro na tabela, considere colocar esses campos em uma tablea separada.
+
+Nós temos dois tipos de chave:
+- natural -> algo que pertence (Ex.: CPF)
+- artificial -> ela é criada (chamamos de ID e vamos numerando)
+
+
+QUEM DEFINE A MODELAGEM, CARDINALIDADE É TUA REGRA DE NEGÓCIO, NÃO VOCÊ
+
+(0,n) 
+(0,1)
+(1,n)
+(1,1)
+
+O primeiro algarismo do par ordenado significa obrigatoriedade (0 = False e 1 = True)
+O segundo algarismo do par ordenado está relacionado em cardionalidade (o mínimo é 1, então pode ser 1 ou mais de 1 (n)) -> vai cuidar 
+do máximo de ocorrências
+
+A gente sempre usa o segundo para fazer a leitura dos relacionamentos
+
+SELEÇÃO, PROJEÇÃO E JUNÇÃO
+
+PROJEÇÃO -> É tudo que você quer ver na tela (tudo que vai ser mostrado)
+
+SELEÇÃO -> É um subconjunto do conjunto total de registros de uma tabela. A clausura de seleção é o WHERE
+
+Categorias de SQL:
+- DML -> Data Manipulation Language (Manipulação de Dados)
+- DDL -> Data Definition Language (Definição/Tipagem de Dados)
+- DCL -> Data Control Language (Controle de acesso aos Dados)
+- TCL -> Transaction Control Language (Controle de transação, que passa pela atomicidade do Banco)
