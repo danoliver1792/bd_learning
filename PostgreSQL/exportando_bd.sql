@@ -194,3 +194,4 @@ create trigger delete_reg
 	
 delete from locacao
 where idLocacao = 1;
+
